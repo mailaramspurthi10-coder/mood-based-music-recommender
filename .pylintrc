@@ -1,0 +1,21 @@
+[MASTER]
+ignore=venv,.venv,build,dist,node_modules
+jobs=0
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    import-error
+
+[FORMAT]
+max-line-length=100
+
+[DESIGN]
+max-args=8
+
+[TYPECHECK]
+ignored-modules=flask_cors
+
