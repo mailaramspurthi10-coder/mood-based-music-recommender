@@ -1,0 +1,35 @@
+# Python cache and bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Node/frontend dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+frontend/build/
+frontend/dist/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor and tool caches
+.vscode/
+.idea/
+.pytest_cache/
+.mypy_cache/
+
