@@ -1,0 +1,22 @@
+rules:
+  - id: flask-debug-enabled
+    languages:
+      - python
+    severity: ERROR
+    message: Do not run Flask with debug=True in committed code.
+    patterns:
+      - pattern: app.run(..., debug=True, ...)
+
+  - id: hardcoded-api-key-variable
+    languages:
+      - python
+    severity: WARNING
+    message: Avoid hardcoded API keys or secrets. Load them from environment variables or a secrets manager.
+    patterns:
+      - pattern-either:
+          - pattern: $NAME = "$VALUE"
+          - pattern: $NAME = '$VALUE'
+      - metavariable-regex:
+          metavariable: $NAME
+          regex: (?i).*(api_key|secret|token|password).*
+
