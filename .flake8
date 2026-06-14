@@ -12,4 +12,7 @@ exclude =
     build,
     dist,
     node_modules
+select = C,E,F,W,B,B9
+application-import-names = backend
+import-order-style = google
 

@@ -7,6 +7,6 @@ python -m vulture backend
 python -m bandit -c pyproject.toml -r backend
 python -m pylint backend
 python -m flake8 backend
-semgrep --config .semgrep.yml backend
+python -m semgrep --config .semgrep.yml backend
 
 Write-Host "All developer checks passed."
