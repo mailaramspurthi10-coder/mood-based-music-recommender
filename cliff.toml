@@ -1,0 +1,11 @@
+[git]
+tag-order = ["semver"]
+commit-order = "date"
+
+[output]
+template = "Keep a Changelog"
+tag-title = "## [{tag_name}] - {tag_date}"
+section-prefix = "###"
+
+[parse]
+ignore-commit-pattern = "^(docs|style|chore):"

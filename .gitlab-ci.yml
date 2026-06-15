@@ -2,6 +2,7 @@ stages:
   - quality
   - security
   - test
+  - release
 
 quality:
   stage: quality
@@ -57,3 +58,24 @@ pytest:
         path: coverage.xml
 
   coverage: '/TOTAL.*\s+(\d+)%/'
+
+release:
+  stage: release
+  image: python:3.12
+
+  before_script:
+    - apt-get update -y
+    - apt-get install -y curl tar gzip
+
+  script:
+    - mkdir -p /tmp/git-cliff
+    - curl -L https://github.com/git-cliff/git-cliff/releases/download/v0.20.0/git-cliff_0.20.0_amd64.tar.gz -o /tmp/git-cliff.tar.gz
+    - tar -xzf /tmp/git-cliff.tar.gz -C /tmp/git-cliff
+    - chmod +x $(find /tmp/git-cliff -type f -name git-cliff)
+    - mv $(find /tmp/git-cliff -type f -name git-cliff) /usr/local/bin/git-cliff
+    - git cliff -o CHANGELOG.md
+
+  artifacts:
+    when: always
+    paths:
+      - CHANGELOG.md
