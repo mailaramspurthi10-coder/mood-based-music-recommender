@@ -11,6 +11,8 @@ dev = [
   "semgrep==1.101.0",
   "pyupgrade==3.19.1",
   "pip-audit==2.7.3",
+  "pytest==8.4.0",
+  "pytest-cov==7.1.0"
 ]
 
 [tool.ruff]
@@ -29,20 +31,8 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-select = [
-  "B",
-  "C4",
-  "E",
-  "F",
-  "I",
-  "N",
-  "SIM",
-  "UP",
-  "W",
-]
-ignore = [
-  "B008",
-]
+select = ["B", "C4", "E", "F", "I", "N", "SIM", "UP", "W"]
+ignore = ["B008"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -70,6 +60,7 @@ exclude = ["venv", ".venv", "build", "dist", "node_modules"]
 targets = ["backend"]
 exclude_dirs = ["venv", ".venv", "build", "dist", "node_modules"]
 skips = []
+
 [tool.pylint.main]
 py-version = "3.12"
 
@@ -88,3 +79,8 @@ exclude = [
 
 [tool.pyupgrade]
 keep-runtime-typing = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "--cov=backend --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=80"
