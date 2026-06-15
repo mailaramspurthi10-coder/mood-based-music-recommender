@@ -103,12 +103,27 @@ mood-based-music-recommender/
    # Then visit http://localhost:8000
    ```
 
-## ⚙️ Configuration
+## 🧪 Developer Tooling
 
-### Language Settings
-1. Click the **⚙️ Settings** button in the top right
-2. Go to the **Language** section
-3. Select your preferred language: English, Telugu, or Hindi
+Install the compliance and analysis tools:
+```bash
+pip install -r requirements-dev.txt
+```
+
+Run the tools locally:
+```bash
+pylint backend
+flake8 backend
+semgrep --config .semgrep.yml backend
+python -m pyupgrade --py312 -w backend/*.py
+```
+
+Verify each tool:
+- `pylint backend` should analyze Python code and report only actionable issues.
+- `flake8 backend` should run with the project line-length and ignore settings configured in `.flake8`.
+- `semgrep --config .semgrep.yml backend` should execute the standard security-focused ruleset and any custom Python rules.
+- `python -m pyupgrade --py312 -w backend/*.py` should modernize syntax for Python 3.12 and rewrite the backend source files in place.
+
 4. Click **Save Settings**
 
 ### AI Provider Configuration

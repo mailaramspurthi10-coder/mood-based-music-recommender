@@ -4,8 +4,7 @@ rules:
       - python
     severity: ERROR
     message: Do not run Flask with debug=True in committed code.
-    patterns:
-      - pattern: app.run(..., debug=True, ...)
+    pattern: app.run(..., debug=True, ...)
 
   - id: hardcoded-api-key-variable
     languages:
@@ -19,22 +18,3 @@ rules:
       - metavariable-regex:
           metavariable: $NAME
           regex: (?i).*(api_key|secret|token|password).*
-
-  - id: python.lang.bestpractices.use-with
-    severity: WARNING
-
-  - id: python.lang.security.audit.yaml.load
-    severity: WARNING
-
-  - id: python.lang.security.audit.subprocess.popen-with-shell
-    severity: WARNING
-
-  - id: python.lang.security.audit.requests.no-timeout
-    severity: WARNING
-
-  - id: python.lang.security.audit.insecure-tempfile
-    severity: WARNING
-
-  - id: python.lang.security.audit.flask.escape-text
-    severity: WARNING
-

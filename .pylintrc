@@ -14,7 +14,8 @@ disable=
     invalid-name,
     broad-except,
     cyclic-import,
-    logging-fstring-interpolation
+    logging-fstring-interpolation,
+    
 
 [REPORTS]
 reports=no
@@ -22,10 +23,10 @@ score=no
 
 [FORMAT]
 max-line-length=100
-indent-string='  '
+indent-string='    '
 
 [DESIGN]
-max-args=8
+max-args=6
 max-attributes=10
 max-branches=12
 max-returns=6
