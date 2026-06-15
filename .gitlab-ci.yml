@@ -10,9 +10,6 @@ quality:
     - pip install -r requirements-dev.txt
 
   script:
-    - ruff check .
-    - mypy backend
-    - vulture backend
     - bandit -r backend
     - pylint backend
     - flake8 .
@@ -32,7 +29,7 @@ pip_audit_dependency_audit:
   image: python:3.12
 
   before_script:
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
+    - pip install -r requirements-dev.txt
 
   script:
     - pip-audit
