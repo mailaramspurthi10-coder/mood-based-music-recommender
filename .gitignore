@@ -32,4 +32,10 @@ Thumbs.db
 .idea/
 .pytest_cache/
 .mypy_cache/
+# Coverage reports (IMPORTANT)
+.coverage
+coverage.xml
+htmlcov/
 
+# Git cliff / release artifacts (optional but clean)
+CHANGELOG.md
