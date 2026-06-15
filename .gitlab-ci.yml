@@ -1,0 +1,18 @@
+stages:
+  - quality
+
+quality:
+  stage: quality
+  image: python:3.12
+
+  before_script:
+    - pip install -r requirements-dev.txt
+
+  script:
+    - ruff check .
+    - mypy backend
+    - vulture backend
+    - bandit -r backend
+    - pylint backend
+    - flake8 .
+    - semgrep --config .semgrep.yml .

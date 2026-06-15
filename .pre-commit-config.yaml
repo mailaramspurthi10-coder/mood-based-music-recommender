@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: v3.3.3
+    hooks:
+      - id: pylint
+        args: ["backend"]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        args: ["--py312-plus"]
+
+  - repo: https://github.com/returntocorp/semgrep
+    rev: v1.101.0
+    hooks:
+      - id: semgrep
+        args: ["--config", ".semgrep.yml"]
