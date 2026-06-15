@@ -4,7 +4,7 @@ stages:
 
 quality:
   stage: quality
-  image: python:3.12
+  image: python:3.11
 
   before_script:
     - pip install -r requirements-dev.txt
@@ -26,7 +26,7 @@ gitleaks_secret_scanning:
 
 pip_audit_dependency_audit:
   stage: security
-  image: python:3.12
+  image: python:3.11
 
   before_script:
     - pip install -r requirements-dev.txt
