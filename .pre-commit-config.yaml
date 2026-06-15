@@ -26,3 +26,23 @@ repos:
     hooks:
       - id: semgrep
         args: ["--config", ".semgrep.yml"]
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        args: ["detect", "--source", ".", "--config", ".gitleaks.toml", "--redact"]
+        pass_filenames: false
+
+  - repo: https://github.com/pypa/pip-audit
+    rev: v2.7.3
+    hooks:
+      - id: pip-audit
+        args:
+          [
+            "--requirement",
+            "backend/requirements.txt",
+            "--requirement",
+            "requirements-dev.txt",
+          ]
+        pass_filenames: false

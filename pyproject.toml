@@ -10,6 +10,7 @@ dev = [
   "flake8==7.1.1",
   "semgrep==1.101.0",
   "pyupgrade==3.19.1",
+  "pip-audit==2.7.3",
 ]
 
 [tool.ruff]
@@ -69,29 +70,6 @@ exclude = ["venv", ".venv", "build", "dist", "node_modules"]
 targets = ["backend"]
 exclude_dirs = ["venv", ".venv", "build", "dist", "node_modules"]
 skips = []
-[tool.pylint.main]
-py-version = "3.12"
-
-[tool.flake8]
-max-line-length = 100
-extend-ignore = ["E203", "W503"]
-exclude = [
-  ".git",
-  "__pycache__",
-  ".venv",
-  "venv",
-  "build",
-  "dist",
-  "node_modules",
-]
-
-[tool.pyupgrade]
-keep-runtime-typing = true
-[tool.bandit]
-targets = ["backend"]
-exclude_dirs = ["venv", ".venv", "build", "dist", "node_modules"]
-skips = []
-
 [tool.pylint.main]
 py-version = "3.12"
 
