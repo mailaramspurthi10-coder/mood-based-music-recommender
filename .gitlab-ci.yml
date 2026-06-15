@@ -29,6 +29,7 @@ pip_audit_dependency_audit:
   image: python:3.11
 
   before_script:
+    - pip install --upgrade pip wheel
     - pip install -r requirements-dev.txt
 
   script:
