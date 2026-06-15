@@ -1,5 +1,6 @@
 stages:
   - quality
+  - security
 
 quality:
   stage: quality
@@ -16,3 +17,22 @@ quality:
     - pylint backend
     - flake8 .
     - semgrep --config .semgrep.yml .
+
+gitleaks_secret_scanning:
+  stage: security
+  image:
+    name: zricethezav/gitleaks:v8.21.2
+    entrypoint: [""]
+
+  script:
+    - gitleaks detect --source . --config .gitleaks.toml --redact
+
+pip_audit_dependency_audit:
+  stage: security
+  image: python:3.12
+
+  before_script:
+    - pip install -r backend/requirements.txt -r requirements-dev.txt
+
+  script:
+    - pip-audit

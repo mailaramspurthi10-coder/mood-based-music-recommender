@@ -1,0 +1,15 @@
+title = "Mood-Based Music Recommender Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow non-sensitive project examples and generated/static assets."
+paths = [
+  '''^frontend/translations/.*\.json$''',
+  '''^backend/songs\.json$''',
+]
+regexes = [
+  '''(?i)example(_|-)?(key|token|secret|password)''',
+  '''(?i)(dummy|sample|placeholder)(_|-)?(key|token|secret|password)''',
+]

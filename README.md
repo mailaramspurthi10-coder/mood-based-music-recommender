@@ -116,6 +116,8 @@ pylint backend
 flake8 backend
 semgrep --config .semgrep.yml backend
 python -m pyupgrade --py312 -w backend/*.py
+gitleaks detect --source .
+pip-audit
 ```
 
 Verify each tool:
@@ -123,6 +125,34 @@ Verify each tool:
 - `flake8 backend` should run with the project line-length and ignore settings configured in `.flake8`.
 - `semgrep --config .semgrep.yml backend` should execute the standard security-focused ruleset and any custom Python rules.
 - `python -m pyupgrade --py312 -w backend/*.py` should modernize syntax for Python 3.12 and rewrite the backend source files in place.
+- `gitleaks detect --source .` should scan the repository for committed or staged secrets using `.gitleaks.toml`.
+- `pip-audit` should audit installed Python dependencies for known vulnerabilities.
+
+### Secret Scanning with Gitleaks
+
+Install Gitleaks locally, then run it from the repository root:
+```bash
+gitleaks detect --source .
+```
+
+The repository includes `.gitleaks.toml` with the default Gitleaks rules enabled and a small allowlist for static demo data and placeholder examples. CI runs the stricter explicit form:
+```bash
+gitleaks detect --source . --config .gitleaks.toml --redact
+```
+
+### Dependency Audit with pip-audit
+
+Install the development tooling first:
+```bash
+pip install -r requirements-dev.txt
+```
+
+Run the Python dependency audit from the repository root:
+```bash
+pip-audit
+```
+
+GitLab CI installs `requirements-dev.txt` and runs `pip-audit` automatically in the `security` stage.
 
 4. Click **Save Settings**
 
