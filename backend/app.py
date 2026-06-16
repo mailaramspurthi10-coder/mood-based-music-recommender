@@ -1,5 +1,5 @@
 import os
-from typing import TypedDict
+from typing import Any, TypedDict
 
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -85,12 +85,12 @@ SONGS: dict[str, list[Song]] = {
 
 
 @app.route("/")
-def home():
+def home() -> str:
     return "Mood-Based Music API is running!"
 
 
 @app.route("/recommend/<mood>", methods=["GET"])
-def recommend(mood):
+def recommend(mood: str) -> Any:
     mood = mood.capitalize()
 
     if mood not in SONGS:
