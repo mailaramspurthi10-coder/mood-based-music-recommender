@@ -1,7 +1,7 @@
 import os
 from typing import TypedDict
 
-from flask import Flask, Response, jsonify
+from flask import Flask, Response, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -57,20 +57,22 @@ SONGS: dict[str, list[Song]] = {
 
 
 @app.route("/")
-def home() -> str:
+def home():
     return "Mood-Based Music API is running!"
 
 
-@app.route("/recommend/<mood>")
-def recommend(mood: str) -> tuple[Response, int] | Response:
-    normalized_mood = mood.capitalize()
+@app.route("/recommend", methods=["POST"])
+def recommend():
+    data = request.get_json()
 
-    if normalized_mood not in SONGS:
+    mood = data.get("mood", "").capitalize()
+
+    if mood not in SONGS:
         return jsonify({"error": "Mood not found"}), 404
 
-    return jsonify(SONGS[normalized_mood])
+    return jsonify(SONGS[mood])
 
 
 if __name__ == "__main__":
     debug = os.getenv("FLASK_DEBUG", "0") == "1"
-    app.run(debug=debug)
+    app.run(host="127.0.0.1", port=5000, debug=debug)
