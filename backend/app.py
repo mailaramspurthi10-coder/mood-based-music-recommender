@@ -1,7 +1,7 @@
 import os
-from typing import TypedDict
+from typing import Any, TypedDict
 
-from flask import Flask, Response, jsonify, request
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -32,7 +32,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Kesariya",
         },
     ],
-
     "Sad": [
         {
             "title": "Someone Like You",
@@ -50,7 +49,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Inkem+Inkem+Inkem+Kaavaale",
         },
     ],
-
     "Relaxed": [
         {
             "title": "Weightless",
@@ -63,7 +61,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Samajavaragamana",
         },
     ],
-
     "Energetic": [
         {
             "title": "Believer",
@@ -85,15 +82,13 @@ SONGS: dict[str, list[Song]] = {
 
 
 @app.route("/")
-def home():
+def home() -> str:
     return "Mood-Based Music API is running!"
 
 
-@app.route("/recommend", methods=["POST"])
-def recommend():
-    data = request.get_json()
-
-    mood = data.get("mood", "").capitalize()
+@app.route("/recommend/<mood>", methods=["GET"])
+def recommend(mood: str) -> Any:
+    mood = mood.capitalize()
 
     if mood not in SONGS:
         return jsonify({"error": "Mood not found"}), 404
