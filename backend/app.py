@@ -22,11 +22,17 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Happy+Pharrell+Williams",
         },
         {
-            "title": "Uptown Funk",
-            "artist": "Bruno Mars",
-            "link": "https://www.youtube.com/results?search_query=Uptown+Funk+Bruno+Mars",
+            "title": "Butta Bomma",
+            "artist": "Armaan Malik",
+            "link": "https://www.youtube.com/results?search_query=Butta+Bomma",
+        },
+        {
+            "title": "Kesariya",
+            "artist": "Arijit Singh",
+            "link": "https://www.youtube.com/results?search_query=Kesariya",
         },
     ],
+
     "Sad": [
         {
             "title": "Someone Like You",
@@ -38,20 +44,42 @@ SONGS: dict[str, list[Song]] = {
             "artist": "Passenger",
             "link": "https://www.youtube.com/results?search_query=Let+Her+Go+Passenger",
         },
+        {
+            "title": "Inkem Inkem Inkem Kaavaale",
+            "artist": "Sid Sriram",
+            "link": "https://www.youtube.com/results?search_query=Inkem+Inkem+Inkem+Kaavaale",
+        },
     ],
+
     "Relaxed": [
         {
             "title": "Weightless",
             "artist": "Marconi Union",
             "link": "https://www.youtube.com/results?search_query=Weightless+Marconi+Union",
-        }
+        },
+        {
+            "title": "Samajavaragamana",
+            "artist": "Sid Sriram",
+            "link": "https://www.youtube.com/results?search_query=Samajavaragamana",
+        },
     ],
+
     "Energetic": [
         {
             "title": "Believer",
             "artist": "Imagine Dragons",
             "link": "https://www.youtube.com/results?search_query=Believer+Imagine+Dragons",
-        }
+        },
+        {
+            "title": "Naatu Naatu",
+            "artist": "Rahul Sipligunj",
+            "link": "https://www.youtube.com/results?search_query=Naatu+Naatu",
+        },
+        {
+            "title": "Jai Ho",
+            "artist": "A.R. Rahman",
+            "link": "https://www.youtube.com/results?search_query=Jai+Ho",
+        },
     ],
 }
 

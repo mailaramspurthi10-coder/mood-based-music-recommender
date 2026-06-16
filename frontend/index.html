@@ -6,27 +6,32 @@
     <title>Mood-Based Music Recommender</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Header -->
     <header>
         <div class="header-container">
             <h1 id="title">Mood-Based Music Recommender 🎵</h1>
+
             <div class="header-controls">
                 <select id="languageSelector" onchange="changeLanguage(this.value)" class="language-selector">
                     <option value="en">English</option>
                     <option value="te">Telugu (తెలుగు)</option>
                     <option value="hi">Hindi (हिन्दी)</option>
                 </select>
+
                 <button id="settingsBtn" class="settings-btn" onclick="openSettings()">⚙️</button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="container">
+
         <div class="mood-selector">
             <label id="selectMoodLabel" for="mood">Select Your Mood:</label>
+
             <select id="mood">
                 <option value="Happy" id="moodHappy">Happy 😊</option>
                 <option value="Sad" id="moodSad">Sad 😢</option>
@@ -34,93 +39,71 @@
                 <option value="Energetic" id="moodEnergetic">Energetic ⚡</option>
             </select>
 
-            <button id="getRecBtn" class="get-rec-btn" onclick="getSongs()">Get Recommendations</button>
+            <button id="getRecBtn" class="get-rec-btn" onclick="getSongs()">
+                Get Recommendations
+            </button>
         </div>
 
-        <!-- Output Container -->
+        <!-- Output -->
         <div id="output" class="output-container"></div>
+
     </main>
 
     <!-- Settings Modal -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeSettings()">&times;</span>
+
+            <span onclick="closeSettings()" class="close-btn">&times;</span>
+
             <h2 id="settingsTitle">Settings</h2>
 
-            <!-- Language Settings -->
             <div class="settings-section">
                 <h3 id="languageSettingsLabel">Language</h3>
-                <select id="languageSelect" onchange="changeLanguage(this.value)" class="settings-input">
+                <select id="languageSelect" onchange="changeLanguage(this.value)">
                     <option value="en">English</option>
                     <option value="te">Telugu (తెలుగు)</option>
                     <option value="hi">Hindi (हिन्दी)</option>
                 </select>
             </div>
 
-            <!-- AI Provider Selection -->
             <div class="settings-section">
-                <h3 id="aiProviderLabel">AI Provider</h3>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="aiProvider" value="none" checked onchange="updateAIProvider()">
-                        <span id="noneProviderLabel">None (Basic Mode)</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="aiProvider" value="ollama" onchange="updateAIProvider()">
-                        <span id="localAiLabel">Local AI (Ollama)</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="aiProvider" value="openai" onchange="updateAIProvider()">
-                        <span id="openaiLabel">OpenAI</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="aiProvider" value="gemini" onchange="updateAIProvider()">
-                        <span id="geminiLabel">Google Gemini</span>
-                    </label>
-                </div>
+                <h3>AI Provider</h3>
+
+                <label>
+                    <input type="radio" name="aiProvider" value="none" checked onchange="updateAIProvider()">
+                    None
+                </label>
+
+                <label>
+                    <input type="radio" name="aiProvider" value="ollama" onchange="updateAIProvider()">
+                    Ollama
+                </label>
+
+                <label>
+                    <input type="radio" name="aiProvider" value="openai" onchange="updateAIProvider()">
+                    OpenAI
+                </label>
+
+                <label>
+                    <input type="radio" name="aiProvider" value="gemini" onchange="updateAIProvider()">
+                    Gemini
+                </label>
             </div>
 
-            <!-- Ollama Settings -->
-            <div id="ollamaSettings" class="settings-section" style="display:none;">
-                <h3 id="ollamaSettingsTitle">Ollama Configuration</h3>
-                <label id="ollamaEndpointLabel" for="ollamaEndpoint">Ollama Endpoint:</label>
-                <input type="text" id="ollamaEndpoint" class="settings-input" placeholder="http://localhost:11434">
-
-                <label id="ollamaModelLabel" for="ollamaModel">Ollama Model:</label>
-                <input type="text" id="ollamaModel" class="settings-input" placeholder="llama2 (or mistral, gemma, neural-chat)">
-            </div>
-
-            <!-- OpenAI Settings -->
-            <div id="openaiSettings" class="settings-section" style="display:none;">
-                <h3 id="openaiSettingsTitle">OpenAI Configuration</h3>
-                <label id="openaiKeyLabel" for="openaiKey">OpenAI API Key:</label>
-                <input type="password" id="openaiKey" class="settings-input" placeholder="sk-...">
-                <small id="openaiNote">Your API key is stored locally in browser storage only.</small>
-            </div>
-
-            <!-- Gemini Settings -->
-            <div id="geminiSettings" class="settings-section" style="display:none;">
-                <h3 id="geminiSettingsTitle">Google Gemini Configuration</h3>
-                <label id="geminiKeyLabel" for="geminiKey">Google Gemini API Key:</label>
-                <input type="password" id="geminiKey" class="settings-input" placeholder="AIza...">
-                <small id="geminiNote">Your API key is stored locally in browser storage only.</small>
-            </div>
-
-            <!-- Save Button -->
             <div class="settings-actions">
-                <button id="saveSettingsBtn" class="save-btn" onclick="saveSettings()">Save Settings</button>
-                <button id="closeSettingsBtn" class="close-btn-alt" onclick="closeSettings()">Close</button>
+                <button onclick="saveSettings()">Save Settings</button>
+                <button onclick="closeSettings()">Close</button>
             </div>
+
         </div>
     </div>
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="loading-spinner" style="display:none;">
-        <div class="spinner"></div>
-        <p id="loadingText">Loading...</p>
+    <!-- Loading -->
+    <div id="loadingSpinner" style="display:none;">
+        <p>Loading...</p>
     </div>
 
-    <script src="translations/en.json"></script>
+    <!-- ✅ ONLY JS FILE (IMPORTANT FIX) -->
     <script src="script.js"></script>
 
 </body>
