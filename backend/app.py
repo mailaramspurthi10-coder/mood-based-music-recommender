@@ -61,11 +61,9 @@ def home():
     return "Mood-Based Music API is running!"
 
 
-@app.route("/recommend", methods=["POST"])
-def recommend():
-    data = request.get_json()
-
-    mood = data.get("mood", "").capitalize()
+@app.route("/recommend/<mood>", methods=["GET"])
+def recommend(mood):
+    mood = mood.capitalize()
 
     if mood not in SONGS:
         return jsonify({"error": "Mood not found"}), 404
