@@ -32,7 +32,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Kesariya",
         },
     ],
-
     "Sad": [
         {
             "title": "Someone Like You",
@@ -50,7 +49,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Inkem+Inkem+Inkem+Kaavaale",
         },
     ],
-
     "Relaxed": [
         {
             "title": "Weightless",
@@ -63,7 +61,6 @@ SONGS: dict[str, list[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Samajavaragamana",
         },
     ],
-
     "Energetic": [
         {
             "title": "Believer",
