@@ -1,8 +1,44 @@
 stages:
+  - lint
+  - type-check
+  - format-check
   - quality
   - security
   - test
   - release
+
+ruff_check:
+  stage: lint
+  image: python:3.12
+
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r backend/requirements.txt -r requirements-dev.txt
+
+  script:
+    - python -m ruff check backend tests
+
+mypy_check:
+  stage: type-check
+  image: python:3.12
+
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r backend/requirements.txt -r requirements-dev.txt
+
+  script:
+    - python -m mypy backend
+
+ruff_format_check:
+  stage: format-check
+  image: python:3.12
+
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r backend/requirements.txt -r requirements-dev.txt
+
+  script:
+    - python -m ruff format --check backend tests
 
 quality:
   stage: quality
