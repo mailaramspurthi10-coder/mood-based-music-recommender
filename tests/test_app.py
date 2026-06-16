@@ -32,4 +32,3 @@ def test_recommend_unknown_mood_returns_404() -> None:
 
     assert response.status_code == 404
     assert response.get_json() == {"error": "Mood not found"}
-    
