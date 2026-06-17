@@ -9,9 +9,7 @@ async function getSongs() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                mood: mood
-            })
+            body: JSON.stringify({ mood: mood })
         });
 
         const data = await response.json();
@@ -19,23 +17,43 @@ async function getSongs() {
         let output = document.getElementById("output");
         output.innerHTML = "";
 
+        // ❌ ERROR CASE
         if (data.error) {
             output.innerHTML = `<p>${data.error}</p>`;
             return;
         }
 
-        data.forEach(song => {
-            output.innerHTML += `
+        // 🧠 AI RESPONSE (string)
+        if (data.source === "ai") {
+            output.innerHTML = `
                 <div class="song-card">
-                    <h3>${song.title}</h3>
-                    <p><strong>Artist:</strong> ${song.artist}</p>
-                    <a href="${song.link}" target="_blank">
-                        🎵 Listen on YouTube
-                    </a>
-                    <hr>
+                    <h3>🎧 AI Recommendations</h3>
+                    <pre>${data.recommendations}</pre>
                 </div>
             `;
-        });
+        }
+
+        // 🎵 STATIC RESPONSE (array)
+        else if (data.source === "static") {
+
+            data.recommendations.forEach(song => {
+                output.innerHTML += `
+                    <div class="song-card">
+                        <h3>${song.title}</h3>
+                        <p><strong>Artist:</strong> ${song.artist}</p>
+                        <a href="${song.link}" target="_blank">
+                            🎵 Listen on YouTube
+                        </a>
+                        <hr>
+                    </div>
+                `;
+            });
+        }
+
+        // ⚠️ UNKNOWN RESPONSE
+        else {
+            output.innerHTML = `<p>Unexpected response format</p>`;
+        }
 
     } catch (error) {
         console.error("ERROR:", error);
@@ -45,6 +63,8 @@ async function getSongs() {
     }
 }
 
+
+// 🌐 LANGUAGE SWITCHING
 function changeLanguage(lang) {
 
     if (lang === "te") {
@@ -58,18 +78,6 @@ function changeLanguage(lang) {
         document.getElementById("getRecBtn").innerText =
             "సిఫార్సులు పొందండి";
 
-        document.getElementById("moodHappy").innerText =
-            "సంతోషంగా 😊";
-
-        document.getElementById("moodSad").innerText =
-            "విచారంగా 😢";
-
-        document.getElementById("moodRelaxed").innerText =
-            "విశ్రాంతిగా 😌";
-
-        document.getElementById("moodEnergetic").innerText =
-            "ఉత్సాహంగా ⚡";
-
     } else if (lang === "hi") {
 
         document.getElementById("title").innerText =
@@ -81,18 +89,6 @@ function changeLanguage(lang) {
         document.getElementById("getRecBtn").innerText =
             "सिफारिशें प्राप्त करें";
 
-        document.getElementById("moodHappy").innerText =
-            "खुश 😊";
-
-        document.getElementById("moodSad").innerText =
-            "उदास 😢";
-
-        document.getElementById("moodRelaxed").innerText =
-            "आरामदायक 😌";
-
-        document.getElementById("moodEnergetic").innerText =
-            "ऊर्जावान ⚡";
-
     } else {
 
         document.getElementById("title").innerText =
@@ -103,21 +99,11 @@ function changeLanguage(lang) {
 
         document.getElementById("getRecBtn").innerText =
             "Get Recommendations";
-
-        document.getElementById("moodHappy").innerText =
-            "Happy 😊";
-
-        document.getElementById("moodSad").innerText =
-            "Sad 😢";
-
-        document.getElementById("moodRelaxed").innerText =
-            "Relaxed 😌";
-
-        document.getElementById("moodEnergetic").innerText =
-            "Energetic ⚡";
     }
 }
 
+
+// ⚙️ SETTINGS MODAL
 function openSettings() {
     document.getElementById("settingsModal").style.display = "block";
 }
@@ -126,10 +112,11 @@ function closeSettings() {
     document.getElementById("settingsModal").style.display = "none";
 }
 
+
+// 💾 SAVE SETTINGS
 function saveSettings() {
 
-    const lang =
-        document.getElementById("languageSelect").value;
+    const lang = document.getElementById("languageSelect").value;
 
     changeLanguage(lang);
 
@@ -140,23 +127,21 @@ function saveSettings() {
     closeSettings();
 }
 
+
+// 🤖 AI Provider (future use)
 function updateAIProvider() {
     console.log("AI Provider changed");
 }
 
+
+// 🔄 LOAD SAVED LANGUAGE
 window.onload = function () {
 
-    const savedLang =
-        localStorage.getItem("language");
+    const savedLang = localStorage.getItem("language");
 
     if (savedLang) {
-
-        document.getElementById("languageSelect").value =
-            savedLang;
-
-        document.getElementById("languageSelector").value =
-            savedLang;
-
+        document.getElementById("languageSelect").value = savedLang;
+        document.getElementById("languageSelector").value = savedLang;
         changeLanguage(savedLang);
     }
 };
