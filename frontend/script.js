@@ -18,25 +18,15 @@ async function getSongs() {
         output.innerHTML = "";
 
         // ❌ ERROR CASE
-        if (data.error) {
-            output.innerHTML = `<p>${data.error}</p>`;
+        if (!response.ok) {
+            output.innerHTML = `<p>${data.error || "Something went wrong"}</p>`;
             return;
         }
 
-        // 🧠 AI RESPONSE (string)
-        if (data.source === "ai") {
-            output.innerHTML = `
-                <div class="song-card">
-                    <h3>🎧 AI Recommendations</h3>
-                    <pre>${data.recommendations}</pre>
-                </div>
-            `;
-        }
+        // 🎯 FIXED RESPONSE HANDLING (matches backend)
+        if (data.songs && Array.isArray(data.songs)) {
 
-        // 🎵 STATIC RESPONSE (array)
-        else if (data.source === "static") {
-
-            data.recommendations.forEach(song => {
+            data.songs.forEach(song => {
                 output.innerHTML += `
                     <div class="song-card">
                         <h3>${song.title}</h3>
@@ -48,10 +38,8 @@ async function getSongs() {
                     </div>
                 `;
             });
-        }
 
-        // ⚠️ UNKNOWN RESPONSE
-        else {
+        } else {
             output.innerHTML = `<p>Unexpected response format</p>`;
         }
 
