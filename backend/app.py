@@ -4,7 +4,7 @@ from typing import TypedDict, List, Dict
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, template_folder="templates", static_folder="static")
 CORS(app)
 
 
