@@ -1,10 +1,10 @@
 import os
 from typing import TypedDict, List, Dict
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 CORS(app)
 
 
@@ -95,8 +95,7 @@ SONGS: Dict[str, List[Song]] = {
 
 @app.route("/")
 def home():
-    return jsonify({"message": "Mood-Based Music API is running"})
-
+   return render_template("index.html")
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
