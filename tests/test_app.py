@@ -13,22 +13,31 @@ def test_home_returns_running_message() -> None:
         response = client.get("/")
 
     assert response.status_code == 200
-    assert b"Mood-Based Music API is running!" in response.data
+    assert b"Mood-Based Music Recommender" in response.data
 
 
 def test_recommend_happy_returns_songs() -> None:
     with app.test_client() as client:
-        response = client.get("/recommend/happy")
+        response = client.post("/recommend", json={"mood": "happy"})
 
     assert response.status_code == 200
     data = response.get_json()
-    assert isinstance(data, list)
-    assert any(song["title"] == "Happy" for song in data)
+    assert data is not None
+    assert data["mood"] == "happy"
+    assert any(song["title"] == "Happy" for song in data["songs"])
 
 
 def test_recommend_unknown_mood_returns_404() -> None:
     with app.test_client() as client:
-        response = client.get("/recommend/unknown")
+        response = client.post("/recommend", json={"mood": "unknown"})
 
     assert response.status_code == 404
     assert response.get_json() == {"error": "Mood not found"}
+
+
+def test_recommend_missing_mood_returns_400() -> None:
+    with app.test_client() as client:
+        response = client.post("/recommend", json={})
+
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "Mood is required"}

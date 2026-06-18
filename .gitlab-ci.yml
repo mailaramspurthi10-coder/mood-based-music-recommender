@@ -1,7 +1,7 @@
 stages:
   - lint
   - type-check
-  - format-check
+  - format
   - quality
   - security
   - test
@@ -30,7 +30,7 @@ mypy_check:
     - python -m mypy backend
 
 ruff_format_check:
-  stage: format-check
+  stage: format
   image: python:3.12
 
   before_script:

@@ -1,7 +1,8 @@
 import os
-from typing import TypedDict, List, Dict
+from typing import TypedDict
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, render_template, request
+from flask.typing import ResponseReturnValue
 from flask_cors import CORS
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -14,7 +15,7 @@ class Song(TypedDict):
     link: str
 
 
-SONGS: Dict[str, List[Song]] = {
+SONGS: dict[str, list[Song]] = {
     "happy": [
         {
             "title": "Happy",
@@ -37,7 +38,6 @@ SONGS: Dict[str, List[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Kesariya",
         },
     ],
-
     "sad": [
         {
             "title": "Someone Like You",
@@ -55,7 +55,6 @@ SONGS: Dict[str, List[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Adiga+Adiga",
         },
     ],
-
     "relaxed": [
         {
             "title": "Weightless",
@@ -73,7 +72,6 @@ SONGS: Dict[str, List[Song]] = {
             "link": "https://www.youtube.com/results?search_query=Raataan+Lambiyan",
         },
     ],
-
     "energetic": [
         {
             "title": "Believer",
@@ -93,12 +91,14 @@ SONGS: Dict[str, List[Song]] = {
     ],
 }
 
+
 @app.route("/")
-def home():
-   return render_template("index.html")
+def home() -> ResponseReturnValue:
+    return render_template("index.html")
+
 
 @app.route("/recommend", methods=["POST"])
-def recommend():
+def recommend() -> ResponseReturnValue:
     data = request.get_json()
 
     if not data or "mood" not in data:
@@ -109,10 +109,7 @@ def recommend():
     if mood not in SONGS:
         return jsonify({"error": "Mood not found"}), 404
 
-    return jsonify({
-        "mood": mood,
-        "songs": SONGS[mood]
-    })
+    return jsonify({"mood": mood, "songs": SONGS[mood]})
 
 
 if __name__ == "__main__":
