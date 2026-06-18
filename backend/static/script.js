@@ -9,7 +9,10 @@ async function getSongs() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ mood: mood })
+            body: JSON.stringify({
+                mood: mood,
+                provider: getSelectedProvider()
+            })
         });
 
         const data = await response.json();
@@ -23,7 +26,7 @@ async function getSongs() {
             return;
         }
 
-        // 🎯 FIXED RESPONSE HANDLING (matches backend)
+        // 🎯 STATIC SONG RESPONSE
         if (data.songs && Array.isArray(data.songs)) {
 
             data.songs.forEach(song => {
@@ -39,13 +42,24 @@ async function getSongs() {
                 `;
             });
 
-        } else {
+        }
+
+        // 🤖 OLLAMA RESPONSE
+        else if (data.result) {
+            output.innerHTML = `
+                <div class="song-card">
+                    <h3>AI Recommendations (Ollama)</h3>
+                    <pre>${data.result}</pre>
+                </div>
+            `;
+        }
+
+        else {
             output.innerHTML = `<p>Unexpected response format</p>`;
         }
 
     } catch (error) {
         console.error("ERROR:", error);
-
         document.getElementById("output").innerHTML =
             "<p>Something went wrong ❌</p>";
     }
@@ -56,7 +70,6 @@ async function getSongs() {
 function changeLanguage(lang) {
 
     if (lang === "te") {
-
         document.getElementById("title").innerText =
             "మూడ్ ఆధారిత సంగీత సిఫార్సుదారు 🎵";
 
@@ -67,7 +80,6 @@ function changeLanguage(lang) {
             "సిఫార్సులు పొందండి";
 
     } else if (lang === "hi") {
-
         document.getElementById("title").innerText =
             "मूड आधारित संगीत अनुशंसक 🎵";
 
@@ -78,7 +90,6 @@ function changeLanguage(lang) {
             "सिफारिशें प्राप्त करें";
 
     } else {
-
         document.getElementById("title").innerText =
             "Mood-Based Music Recommender 🎵";
 
@@ -103,7 +114,6 @@ function closeSettings() {
 
 // 💾 SAVE SETTINGS
 function saveSettings() {
-
     const lang = document.getElementById("languageSelect").value;
 
     changeLanguage(lang);
@@ -113,12 +123,6 @@ function saveSettings() {
     alert("Settings saved successfully! ✓");
 
     closeSettings();
-}
-
-
-// 🤖 AI Provider (future use)
-function updateAIProvider() {
-    console.log("AI Provider changed");
 }
 
 
@@ -133,3 +137,10 @@ window.onload = function () {
         changeLanguage(savedLang);
     }
 };
+
+
+// 🤖 GET SELECTED AI PROVIDER
+function getSelectedProvider() {
+    const selected = document.querySelector('input[name="aiProvider"]:checked');
+    return selected ? selected.value : "none";
+}
