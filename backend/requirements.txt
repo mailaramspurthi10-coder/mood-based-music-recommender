@@ -1,3 +1,2 @@
- Flask 
- Flask-cors
- gunicorn
+flask
+flask-cors

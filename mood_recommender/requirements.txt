@@ -1,0 +1,2 @@
+# Minimal dependencies for the mood-based music recommender
+# This project uses only Python standard library modules.

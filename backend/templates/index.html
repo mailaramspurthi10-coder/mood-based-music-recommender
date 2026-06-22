@@ -4,107 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood-Based Music Recommender</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <h1 id="title">Mood-Based Music Recommender 🎵</h1>
+<header>
+    <div class="header-container">
+        <h1 id="title">Mood-Based Music Recommender 🎵</h1>
 
-            <div class="header-controls">
-                <select id="languageSelector" onchange="changeLanguage(this.value)" class="language-selector">
-                    <option value="en">English</option>
-                    <option value="te">Telugu (తెలుగు)</option>
-                    <option value="hi">Hindi (हिन्दी)</option>
-                </select>
+        <div class="header-controls">
 
-                <button id="settingsBtn" class="settings-btn" onclick="openSettings()">⚙️</button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main -->
-    <main class="container">
-
-        <div class="mood-selector">
-            <label id="selectMoodLabel" for="mood">Select Your Mood:</label>
-
-            <select id="mood">
-                <option value="Happy" id="moodHappy">Happy 😊</option>
-                <option value="Sad" id="moodSad">Sad 😢</option>
-                <option value="Relaxed" id="moodRelaxed">Relaxed 😌</option>
-                <option value="Energetic" id="moodEnergetic">Energetic ⚡</option>
+            <!-- Language -->
+            <select id="languageSelector" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="te">Telugu (తెలుగు)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
             </select>
 
-            <button id="getRecBtn" class="get-rec-btn" onclick="getSongs()">
-                Get Recommendations
-            </button>
-        </div>
-
-        <!-- Output -->
-        <div id="output" class="output-container"></div>
-
-    </main>
-
-    <!-- Settings Modal -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-
-            <span onclick="closeSettings()" class="close-btn">&times;</span>
-
-            <h2 id="settingsTitle">Settings</h2>
-
-            <div class="settings-section">
-                <h3 id="languageSettingsLabel">Language</h3>
-                <select id="languageSelect" onchange="changeLanguage(this.value)">
-                    <option value="en">English</option>
-                    <option value="te">Telugu (తెలుగు)</option>
-                    <option value="hi">Hindi (हिन्दी)</option>
-                </select>
-            </div>
-
-            <div class="settings-section">
-                <h3>AI Provider</h3>
-
-                <label>
-                    <input type="radio" name="aiProvider" value="none" checked onchange="updateAIProvider()">
-                    None
-                </label>
-
-                <label>
-                    <input type="radio" name="aiProvider" value="ollama" onchange="updateAIProvider()">
-                    Ollama
-                </label>
-
-                <label>
-                    <input type="radio" name="aiProvider" value="openai" onchange="updateAIProvider()">
-                    OpenAI
-                </label>
-
-                <label>
-                    <input type="radio" name="aiProvider" value="gemini" onchange="updateAIProvider()">
-                    Gemini
-                </label>
-            </div>
-
-            <div class="settings-actions">
-                <button onclick="saveSettings()">Save Settings</button>
-                <button onclick="closeSettings()">Close</button>
-            </div>
+            <button onclick="openSettings()">⚙️</button>
 
         </div>
     </div>
+</header>
 
-    <!-- Loading -->
-    <div id="loadingSpinner" style="display:none;">
-        <p>Loading...</p>
+<main class="container">
+
+    <div class="mood-selector">
+
+        <label id="selectMoodLabel">Select Your Mood:</label>
+
+        <!-- ✅ IMPORTANT: MUST MATCH BACKEND KEYS -->
+        <select id="mood">
+            <option value="happy">Happy 😊</option>
+            <option value="sad">Sad 😢</option>
+            <option value="relaxed">Relaxed 😌</option>
+            <option value="energetic">Energetic ⚡</option>
+        </select>
+
+        <button onclick="getSongs()">
+            Get Recommendations
+        </button>
+
     </div>
 
-    <!-- ✅ ONLY JS FILE (IMPORTANT FIX) -->
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- OUTPUT -->
+    <div id="output"></div>
+
+</main>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" style="display:none;">
+    <div class="modal-box">
+
+        <h2>Settings</h2>
+
+        <!-- LANGUAGE -->
+        <label>Language</label>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="te">Telugu</option>
+            <option value="hi">Hindi</option>
+        </select>
+
+        <hr>
+
+        <!-- AI PROVIDER -->
+        <h3>AI Provider</h3>
+
+        <!-- ⚠️ ONLY "none" WORKS CURRENTLY -->
+        <label>
+            <input type="radio" name="aiProvider" value="none" checked>
+            None
+        </label>
+
+        <label>
+            <input type="radio" name="aiProvider" value="ollama">
+            Ollama
+        </label>
+
+        <label>
+            <input type="radio" name="aiProvider" value="openai">
+            OpenAI
+        </label>
+
+        <label>
+            <input type="radio" name="aiProvider" value="gemini">
+            Gemini
+        </label>
+
+        <br><br>
+
+        <button onclick="saveSettings()">Save</button>
+        <button onclick="closeSettings()">Close</button>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 </html>
