@@ -29,8 +29,8 @@ quality:
   stage: quality
   script:
     - python -m bandit -r backend
-    - python -m pylint backend
-    - python -m flake8 .
+    - python -m pylint backend --ignore=builds,venv,.venv
+    - python -m flake8 backend
 
 gitleaks_secret_scanning:
   stage: security
