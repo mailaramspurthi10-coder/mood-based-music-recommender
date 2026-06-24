@@ -1,0 +1,10 @@
+[init]
+	defaultBranch = none
+[fetch]
+	recurseSubmodules = false
+[credential]
+	interactive = never
+[gc]
+	autoDetach = false
+[include]
+	path = C:\\Users\\hp\\Desktop\\mood-based-music-recommender\\builds\\WrprKH-RB\\0\\Spurthi_10\\mood-based-music-recommender.tmp\\.gitlab-runner.ext.conf

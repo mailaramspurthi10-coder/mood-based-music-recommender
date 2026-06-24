@@ -39,6 +39,10 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 
+# IMPORTANT FIX FOR CI CONSISTENCY
+[tool.ruff.lint.isort]
+known-first-party = ["backend"]
+
 [tool.mypy]
 python_version = "3.12"
 files = ["backend"]
