@@ -15,7 +15,7 @@ class Memory:
     def _load(self):
         if os.path.exists(self.file_path):
             try:
-                with open(self.file_path, "r") as f:
+                with open(self.file_path) as f:
                     data = json.load(f)
 
                 self.history = set(data.get("history", []))
@@ -31,7 +31,7 @@ class Memory:
         data = {
             "history": list(self.history),
             "moods": self.mood_history,
-            "artists": list(self.artist_history)
+            "artists": list(self.artist_history),
         }
 
         with open(self.file_path, "w") as f:

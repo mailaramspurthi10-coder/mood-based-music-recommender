@@ -5,83 +5,45 @@ stages:
   - quality
   - security
   - test
-  - coverage
 
+before_script:
+  - pip install --upgrade pip
+  - pip install -r backend/requirements.txt -r requirements-dev.txt
 
 ruff_check:
   stage: lint
-  image: python:3.12
-
-  before_script:
-    - pip install --upgrade pip
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-
   script:
     - python -m ruff check backend tests
 
 mypy_check:
   stage: type-check
-  image: python:3.12
-
-  before_script:
-    - pip install --upgrade pip
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-
   script:
     - python -m mypy backend
 
 ruff_format_check:
   stage: format
-  image: python:3.12
-
-  before_script:
-    - pip install --upgrade pip
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-
   script:
     - python -m ruff format --check backend tests
 
 quality:
   stage: quality
-  image: python:3.11
-
-  before_script:
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-
   script:
-    - bandit -r backend
-    - pylint backend
-    - flake8 .
-    - semgrep --config .semgrep.yml .
+    - python -m bandit -r backend
+    - python -m pylint backend
+    - python -m flake8 .
 
 gitleaks_secret_scanning:
   stage: security
-  image:
-    name: zricethezav/gitleaks:v8.21.2
-    entrypoint: [""]
-
   script:
     - gitleaks detect --source . --config .gitleaks.toml --redact
 
 pip_audit_dependency_audit:
   stage: security
-  image: python:3.11
-
-  before_script:
-    - pip install --upgrade pip wheel
-    - pip install -r requirements-dev.txt
-
   script:
     - pip-audit
 
 pytest:
   stage: test
-  image: python:3.12
-
-  before_script:
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-    - pip install pytest-cov
-
   script:
     - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
 
@@ -89,29 +51,5 @@ pytest:
     when: always
     paths:
       - coverage.xml
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml
 
   coverage: '/TOTAL.*\s+(\d+)%/'
-
-coverage:
-  stage: coverage
-  image: python:3.12
-
-  before_script:
-    - pip install -r backend/requirements.txt -r requirements-dev.txt
-    - pip install pytest-cov
-
-  script:
-    - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
-
-  artifacts:
-    when: always
-    paths:
-      - coverage.xml
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage.xml

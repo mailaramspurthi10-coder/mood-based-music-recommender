@@ -42,7 +42,8 @@ def main():
 
         print(f"\nMood detected: {recommendation['mood'].capitalize()}")
         print("Recommendations:")
-        for index, song in enumerate(recommendation["songs"], start=1):
+
+        for song in recommendation["songs"]:
             print(f"- {song['title']} by {song['artist']} ({song['reason']})")
 
         print("\nYour preferences and history are saved for more personal songs next time.\n")

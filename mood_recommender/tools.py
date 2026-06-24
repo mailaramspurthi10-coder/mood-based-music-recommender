@@ -1,8 +1,5 @@
 """Helper tools for mood detection and song recommendations."""
 
-from pathlib import Path
-
-
 MOOD_KEYWORDS = {
     "happy": ["happy", "joy", "good", "great", "excited", "optimistic"],
     "sad": ["sad", "down", "blue", "unhappy", "depressed", "melancholy"],

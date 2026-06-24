@@ -36,7 +36,6 @@ SONGS = {
         {"title": "On Top of the World", "artist": "Imagine Dragons"},
         {"title": "Love You Zindagi", "artist": "Amit Trivedi"},
     ],
-
     "sad": [
         {"title": "Someone Like You", "artist": "Adele"},
         {"title": "Let Her Go", "artist": "Passenger"},
@@ -46,7 +45,6 @@ SONGS = {
         {"title": "Channa Mereya", "artist": "Arijit Singh"},
         {"title": "Tears in Heaven", "artist": "Eric Clapton"},
     ],
-
     "relaxed": [
         {"title": "Weightless", "artist": "Marconi Union"},
         {"title": "Perfect", "artist": "Ed Sheeran"},
@@ -56,7 +54,6 @@ SONGS = {
         {"title": "Night Owl", "artist": "Galimatias"},
         {"title": "Ocean Eyes", "artist": "Billie Eilish"},
     ],
-
     "energetic": [
         {"title": "Believer", "artist": "Imagine Dragons"},
         {"title": "Thunder", "artist": "Imagine Dragons"},
@@ -65,7 +62,7 @@ SONGS = {
         {"title": "Eye of the Tiger", "artist": "Survivor"},
         {"title": "Till I Collapse", "artist": "Eminem"},
         {"title": "Jai Ho", "artist": "A.R. Rahman"},
-    ]
+    ],
 }
 
 
@@ -73,7 +70,7 @@ SONGS = {
 # SONG RECOMMENDER
 # -------------------------
 def get_song_recommendations(mood: str, provider: str = "none"):
-    mood = mood.lower().strip()   # clean input
+    mood = mood.lower().strip()  # clean input
 
     songs = SONGS.get(mood, []).copy()
 

@@ -1,7 +1,7 @@
 """Core agent logic for the mood-based music recommender."""
 
-from tools import get_song_recommendations, mood_analyzer
 from memory import update_memory
+from tools import get_song_recommendations, mood_analyzer
 
 
 class MusicRecommendationAgent:

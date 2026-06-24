@@ -1,6 +1,7 @@
-from tools import mood_analyzer, get_song_recommendations
-from memory import Memory
 import random
+
+from memory import Memory
+from tools import get_song_recommendations, mood_analyzer
 
 
 class MusicAgent:
@@ -8,7 +9,6 @@ class MusicAgent:
         self.memory = Memory()
 
     def run(self, user_text: str, provider: str = "none"):
-
         # ---------------------------
         # 1. Mood Detection (NLP layer)
         # ---------------------------
@@ -55,8 +55,11 @@ class MusicAgent:
                 {
                     "title": s["title"],
                     "artist": s["artist"],
-                    "reason": f"This song matches your {mood} mood and helps improve emotional balance."
+                    "reason": (
+                        f"This song matches your {mood} mood "
+                        "and helps improve emotional balance."
+                    ),
                 }
                 for s in filtered_songs
-            ]
+            ],
         }

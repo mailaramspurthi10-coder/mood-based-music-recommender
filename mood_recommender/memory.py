@@ -12,7 +12,7 @@ def _load_storage():
     try:
         with USER_MEMORY_FILE.open("r", encoding="utf-8") as handle:
             return json.load(handle)
-    except (json.JSONDecodeError, IOError):
+    except (OSError, json.JSONDecodeError):
         return {}
 
 
