@@ -58,6 +58,13 @@ SONGS: dict[str, list[dict[str, str]]] = {
 
 
 def get_song_recommendations(mood: str, provider: str = "none") -> list[dict[str, Any]]:
+    """
+    Returns songs based on mood.
+    'provider' is intentionally unused (future extension),
+    so we keep it but ignore it safely for CI.
+    """
+    _ = provider  # fixes pylint W0613
+
     mood = mood.lower().strip()
 
     songs = SONGS.get(mood, []).copy()

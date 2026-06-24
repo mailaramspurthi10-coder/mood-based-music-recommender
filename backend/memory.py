@@ -16,7 +16,7 @@ class Memory:
     def _load(self) -> None:
         if os.path.exists(self.file_path):
             try:
-                with open(self.file_path) as f:
+                with open(self.file_path, encoding="utf-8") as f:
                     data = json.load(f)
 
                 self.history = set(data.get("history", []))
@@ -35,11 +35,11 @@ class Memory:
             "artists": list(self.artist_history),
         }
 
-        with open(self.file_path, "w") as f:
+        with open(self.file_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
 
     def filter_new_songs(self, songs: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        new_songs = []
+        new_songs: list[dict[str, Any]] = []
 
         for s in songs:
             title = s.get("title")
