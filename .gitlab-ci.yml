@@ -13,7 +13,7 @@ before_script:
 ruff_check:
   stage: lint
   script:
-    - python -m ruff check backend tests
+    - python -m ruff check .
 
 mypy_check:
   stage: type-check
@@ -23,7 +23,7 @@ mypy_check:
 ruff_format_check:
   stage: format
   script:
-    - python -m ruff format --check backend tests
+    - python -m ruff format --check .
 
 quality:
   stage: quality
