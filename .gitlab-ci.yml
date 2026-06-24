@@ -13,7 +13,7 @@ before_script:
 ruff_check:
   stage: lint
   script:
-    - python -m ruff check .
+    - python -m ruff check backend tests
 
 mypy_check:
   stage: type-check
@@ -23,7 +23,7 @@ mypy_check:
 ruff_format_check:
   stage: format
   script:
-    - python -m ruff check --diff .
+    - python -m ruff format --check backend tests
 
 quality:
   stage: quality
@@ -46,10 +46,8 @@ pytest:
   stage: test
   script:
     - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
-
   artifacts:
     when: always
     paths:
       - coverage.xml
-
   coverage: '/TOTAL.*\s+(\d+)%/'
