@@ -23,7 +23,7 @@ mypy_check:
 ruff_format_check:
   stage: format
   script:
-    - python -m ruff format --check .
+    - python -m ruff check --diff .
 
 quality:
   stage: quality
