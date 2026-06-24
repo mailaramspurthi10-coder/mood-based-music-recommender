@@ -1,32 +1,23 @@
 import random
+from typing import Any
 
 
-# -------------------------
-# MOOD ANALYZER (text → mood)
-# -------------------------
-def mood_analyzer(text: str):
+def mood_analyzer(text: str) -> str:
     text = text.lower()
 
     if any(word in text for word in ["sad", "cry", "depress"]):
         return "sad"
-
-    elif any(word in text for word in ["happy", "joy", "excited"]):
+    if any(word in text for word in ["happy", "joy", "excited"]):
         return "happy"
-
-    elif any(word in text for word in ["stress", "anxious", "calm"]):
+    if any(word in text for word in ["stress", "anxious", "calm"]):
         return "relaxed"
-
-    elif any(word in text for word in ["energy", "energetic", "gym", "pump"]):
+    if any(word in text for word in ["energy", "energetic", "gym", "pump"]):
         return "energetic"
 
-    else:
-        return "relaxed"
+    return "relaxed"
 
 
-# -------------------------
-# SONG DATABASE
-# -------------------------
-SONGS = {
+SONGS: dict[str, list[dict[str, str]]] = {
     "happy": [
         {"title": "Happy", "artist": "Pharrell Williams"},
         {"title": "Can't Stop the Feeling", "artist": "Justin Timberlake"},
@@ -66,19 +57,14 @@ SONGS = {
 }
 
 
-# -------------------------
-# SONG RECOMMENDER
-# -------------------------
-def get_song_recommendations(mood: str, provider: str = "none"):
-    mood = mood.lower().strip()  # clean input
+def get_song_recommendations(mood: str, provider: str = "none") -> list[dict[str, Any]]:
+    mood = mood.lower().strip()
 
     songs = SONGS.get(mood, []).copy()
 
-    # safety: if mood not found
     if not songs:
         return SONGS["relaxed"].copy()
 
-    # shuffle for variety
     random.shuffle(songs)
 
     return songs

@@ -1,18 +1,19 @@
 import json
 import os
+from typing import Any
 
 
 class Memory:
-    def __init__(self, file_path="memory.json"):
+    def __init__(self, file_path: str = "memory.json") -> None:
         self.file_path = file_path
 
-        self.history = set()
-        self.mood_history = []
-        self.artist_history = set()
+        self.history: set[str] = set()
+        self.mood_history: list[str] = []
+        self.artist_history: set[str] = set()
 
         self._load()
 
-    def _load(self):
+    def _load(self) -> None:
         if os.path.exists(self.file_path):
             try:
                 with open(self.file_path) as f:
@@ -27,7 +28,7 @@ class Memory:
                 self.mood_history = []
                 self.artist_history = set()
 
-    def _save_file(self):
+    def _save_file(self) -> None:
         data = {
             "history": list(self.history),
             "moods": self.mood_history,
@@ -37,7 +38,7 @@ class Memory:
         with open(self.file_path, "w") as f:
             json.dump(data, f, indent=4)
 
-    def filter_new_songs(self, songs):
+    def filter_new_songs(self, songs: list[dict[str, Any]]) -> list[dict[str, Any]]:
         new_songs = []
 
         for s in songs:
@@ -46,14 +47,13 @@ class Memory:
             if title and title not in self.history:
                 new_songs.append(s)
 
-        # ✅ IMPORTANT FIX: if all songs are repeated, reset cycle
         if not new_songs:
             self.history.clear()
             return songs
 
         return new_songs
 
-    def save(self, mood, songs):
+    def save(self, mood: str, songs: list[dict[str, Any]]) -> None:
         self.mood_history.append(mood)
 
         if len(self.mood_history) > 50:
@@ -71,7 +71,7 @@ class Memory:
 
         self._save_file()
 
-    def clear(self):
+    def clear(self) -> None:
         self.history.clear()
         self.mood_history = []
         self.artist_history.clear()
