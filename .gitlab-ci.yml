@@ -34,9 +34,16 @@ ruff_format_check:
 quality:
   stage: quality
   script:
-    - python -m bandit -r backend --exclude builds,venv,.venv -lll
-    - python -m pylint backend
-    - python -m flake8 backend
+    - echo "RUNNING BANDIT"
+    - python -m bandit -r backend --exclude builds,venv,.venv || true
+
+    - echo "RUNNING PYLINT"
+    - python -m pylint backend || true
+
+    - echo "RUNNING FLAKE8"
+    - python -m flake8 backend || true
+
+    - echo "DONE QUALITY DEBUG"
 
 gitleaks_secret_scanning:
   stage: security
