@@ -18,7 +18,7 @@ ruff_check:
   stage: lint
   script:
     - python -m ruff --version
-    - python -m ruff check backend tests
+    - python -m ruff check .
 
 mypy_check:
   stage: type-check
@@ -29,8 +29,8 @@ ruff_format_check:
   stage: format
   script:
     - python -m ruff --version
-    - python -m ruff config
-    - python -m ruff format --check backend tests
+    - python -m ruff format --check .
+
 quality:
   stage: quality
   script:
