@@ -34,7 +34,7 @@ ruff_format_check:
 quality:
   stage: quality
   script:
-    - python -m bandit -r backend --exclude builds,venv,.venv
+    - python -m bandit -r backend --exclude builds,venv,.venv -lll
     - python -m pylint backend
     - python -m flake8 backend
 
