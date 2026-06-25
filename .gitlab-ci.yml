@@ -17,7 +17,6 @@ before_script:
 ruff_check:
   stage: lint
   script:
-    - python -m ruff --version
     - python -m ruff check .
 
 mypy_check:
@@ -28,22 +27,15 @@ mypy_check:
 ruff_format_check:
   stage: format
   script:
-    - python -m ruff --version
     - python -m ruff format --check .
 
 quality:
   stage: quality
   script:
-    - echo "RUNNING BANDIT"
-    - python -m bandit -r backend --exclude builds,venv,.venv || true
-
-    - echo "RUNNING PYLINT"
-    - python -m pylint backend || true
-
-    - echo "RUNNING FLAKE8"
-    - python -m flake8 backend || true
-
-    - echo "DONE QUALITY DEBUG"
+    - echo "START QUALITY"
+    - python -m bandit -r backend --exclude builds,venv,.venv
+    - python -m pylint backend
+    - python -m flake8 backend
 
 gitleaks_secret_scanning:
   stage: security
