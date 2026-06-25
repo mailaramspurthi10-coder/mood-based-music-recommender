@@ -51,7 +51,10 @@ quality:
 gitleaks_secret_scanning:
   stage: security
   script:
-    - gitleaks detect --source . --config .gitleaks.toml --redact
+    - curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64.tar.gz -o gitleaks.tar.gz
+    - tar -xzf gitleaks.tar.gz
+    - chmod +x gitleaks
+    - ./gitleaks detect --source . --config .gitleaks.toml --redact
 
 pip_audit_dependency_audit:
   stage: security
