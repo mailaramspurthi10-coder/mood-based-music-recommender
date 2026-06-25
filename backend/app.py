@@ -24,13 +24,13 @@ def home() -> str:
 @app.route("/recommend", methods=["POST"])
 def recommend() -> ResponseReturnValue:
     try:
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
 
-        if not data or "mood" not in data:
-            return jsonify({"error": "Mood is required"}), 400
-
-        mood_text = data["mood"].strip()
+        mood_text = data.get("mood", "").strip()
         provider = data.get("provider", "none")
+
+        if not mood_text:
+            return jsonify({"error": "Mood is required"}), 400
 
         result = agent.run(mood_text, provider)
 
