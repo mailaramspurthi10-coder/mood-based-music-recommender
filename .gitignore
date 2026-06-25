@@ -1,41 +1,77 @@
+# =========================
 # Python cache and bytecode
+# =========================
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 
+# =========================
 # Virtual environments
+# =========================
 venv/
 .venv/
 env/
 
-# Environment variables and secrets
+# =========================
+# Environment variables / secrets
+# =========================
 .env
 .env.*
 !.env.example
 
-# Node/frontend dependencies
+# =========================
+# Node / frontend deps
+# =========================
 node_modules/
 
+# =========================
 # Build outputs
+# =========================
 build/
 dist/
 frontend/build/
 frontend/dist/
+builds/
 
-# Operating system files
+# =========================
+# CI / GitLab runner artifacts (IMPORTANT for your case)
+# =========================
+.runner_system_id
+config.toml
+
+# =========================
+# OS files
+# =========================
 .DS_Store
 Thumbs.db
 
-# Editor and tool caches
+# =========================
+# Editor / IDE caches
+# =========================
 .vscode/
 .idea/
+
+# =========================
+# Testing / tooling caches
+# =========================
 .pytest_cache/
 .mypy_cache/
-# Coverage reports (IMPORTANT)
+.ruff_cache/
+
+# =========================
+# Coverage reports
+# =========================
 .coverage
 coverage.xml
 htmlcov/
 
-# Git cliff / release artifacts (optional but clean)
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Optional: release artifacts
+# =========================
 CHANGELOG.md
