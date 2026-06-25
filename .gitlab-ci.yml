@@ -50,11 +50,10 @@ quality:
 # ---------------- SECURITY ----------------
 gitleaks_secret_scanning:
   stage: security
+  image: zricethezav/gitleaks:latest
   script:
-    - powershell -Command "Invoke-WebRequest -Uri https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_windows_x64.zip -OutFile gitleaks.zip"
-    - powershell -Command "Expand-Archive -Path gitleaks.zip -DestinationPath gitleaks"
-    - gitleaks\gitleaks.exe detect --source . --config .gitleaks.toml --redact
-    
+    - gitleaks detect --source . --redact --verbose
+
 pip_audit_dependency_audit:
   stage: security
   script:
