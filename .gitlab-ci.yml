@@ -6,13 +6,18 @@ stages:
   - security
   - test
 
+variables:
+  PYTHONUNBUFFERED: "1"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
 before_script:
-  - pip install --upgrade pip
-  - pip install -r backend/requirements.txt -r requirements-dev.txt
+  - python -m pip install --upgrade pip
+  - python -m pip install -r backend/requirements.txt -r requirements-dev.txt
 
 ruff_check:
   stage: lint
   script:
+    - python -m ruff --version
     - python -m ruff check backend tests
 
 mypy_check:
@@ -23,12 +28,13 @@ mypy_check:
 ruff_format_check:
   stage: format
   script:
+    - python -m ruff --version
     - python -m ruff format --check backend tests
 
 quality:
   stage: quality
   script:
-    - python -m bandit -r backend
+    - python -m bandit -r backend --exclude builds,venv,.venv
     - python -m pylint backend --ignore=builds,venv,.venv
     - python -m flake8 backend
 
@@ -46,8 +52,10 @@ pytest:
   stage: test
   script:
     - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
+
   artifacts:
     when: always
     paths:
       - coverage.xml
+
   coverage: '/TOTAL.*\s+(\d+)%/'
