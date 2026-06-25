@@ -29,8 +29,8 @@ ruff_format_check:
   stage: format
   script:
     - python -m ruff --version
+    - python -m ruff config
     - python -m ruff format --check backend tests
-
 quality:
   stage: quality
   script:
