@@ -51,11 +51,10 @@ quality:
 gitleaks_secret_scanning:
   stage: security
   script:
-    - curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64.tar.gz -o gitleaks.tar.gz
-    - tar -xzf gitleaks.tar.gz
-    - chmod +x gitleaks
-    - ./gitleaks detect --source . --config .gitleaks.toml --redact
-
+    - powershell -Command "Invoke-WebRequest -Uri https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_windows_x64.zip -OutFile gitleaks.zip"
+    - powershell -Command "Expand-Archive -Path gitleaks.zip -DestinationPath gitleaks"
+    - gitleaks\gitleaks.exe detect --source . --config .gitleaks.toml --redact
+    
 pip_audit_dependency_audit:
   stage: security
   script:
