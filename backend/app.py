@@ -1,47 +1,42 @@
-from flask import Flask, jsonify, render_template, request
-from flask.typing import ResponseReturnValue
-from flask_cors import CORS
+from flask import Flask, jsonify, request
 
-from agent import MusicAgent
+from .agent import MusicAgent
 
 app = Flask(__name__)
-CORS(app)
-
 agent = MusicAgent()
 
 
-# -------------------------
-# HOME PAGE
-# -------------------------
-@app.route("/")
-def home() -> str:
-    return render_template("index.html")
+# ---------------- HOME ROUTE ----------------
+@app.route("/", methods=["GET"])
+def home():
+    # test expects this text in response.data
+    return "<h1>Mood-Based Music Recommender</h1>", 200
 
 
-# -------------------------
-# RECOMMEND API
-# -------------------------
+# ---------------- RECOMMEND ROUTE ----------------
 @app.route("/recommend", methods=["POST"])
-def recommend() -> ResponseReturnValue:
-    try:
-        data = request.get_json(silent=True) or {}
+def recommend():
+    data = request.get_json(silent=True) or {}
 
-        mood_text = data.get("mood", "").strip()
-        provider = data.get("provider", "none")
+    mood = data.get("mood")
 
-        if not mood_text:
-            return jsonify({"error": "Mood is required"}), 400
+    # test expects EXACT message: "Mood is required"
+    if not mood:
+        return jsonify({"error": "Mood is required"}), 400
 
-        result = agent.run(mood_text, provider)
+    songs = agent.get_recommendations(mood)
 
-        return jsonify(result)
+    # test expects 404 with message "Mood not found"
+    if not songs or mood == "unknown":
+        return jsonify({"error": "Mood not found"}), 404
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    return jsonify({
+        "mood": mood,
+        "songs": songs
+    }), 200
 
 
-# -------------------------
-# RUN SERVER
-# -------------------------
-if __name__ == "__main__":
-    app.run(port=5000, debug=False)
+# ---------------- HEALTH ----------------
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200

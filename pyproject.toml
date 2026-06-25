@@ -16,6 +16,7 @@ dev = [
   "ruff==0.8.4"
 ]
 
+# ---------------- RUFF ----------------
 [tool.ruff]
 target-version = "py311"
 line-length = 100
@@ -43,6 +44,7 @@ line-ending = "lf"
 [tool.ruff.lint.isort]
 known-first-party = ["backend"]
 
+# ---------------- MYPY ----------------
 [tool.mypy]
 python_version = "3.11"
 files = ["backend"]
@@ -54,20 +56,24 @@ no_implicit_optional = true
 strict_optional = true
 ignore_missing_imports = true
 
+# ---------------- VULTURE ----------------
 [tool.vulture]
 paths = ["backend"]
 min_confidence = 80
 sort_by_size = true
 exclude = ["venv", ".venv", "build", "dist", "node_modules"]
 
+# ---------------- BANDIT ----------------
 [tool.bandit]
 targets = ["backend"]
 exclude_dirs = ["venv", ".venv", "build", "dist", "node_modules"]
 skips = []
 
+# ---------------- PYLINT ----------------
 [tool.pylint.main]
 py-version = "3.11"
 
+# ---------------- FLAKE8 ----------------
 [tool.flake8]
 max-line-length = 100
 extend-ignore = ["E203", "W503"]
@@ -81,10 +87,18 @@ exclude = [
   "node_modules",
 ]
 
+# ---------------- PYUPGRADE ----------------
 [tool.pyupgrade]
 keep-runtime-typing = true
 
+# ---------------- PYTEST (FIXED) ----------------
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "--cov=backend --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=80"
+addopts = """
+--cov=backend
+--cov-report=term-missing
+--cov-report=xml:coverage.xml
+--cov-fail-under=80
+--ignore=backend/main.py
+"""

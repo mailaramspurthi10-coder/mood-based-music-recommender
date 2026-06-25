@@ -3,6 +3,9 @@ from typing import Any
 
 
 def mood_analyzer(text: str) -> str:
+    if not text:
+        return "relaxed"
+
     text = text.lower()
 
     if any(word in text for word in ["sad", "cry", "depress"]):
@@ -20,57 +23,38 @@ def mood_analyzer(text: str) -> str:
 SONGS: dict[str, list[dict[str, str]]] = {
     "happy": [
         {"title": "Happy", "artist": "Pharrell Williams"},
-        {"title": "Can't Stop the Feeling", "artist": "Justin Timberlake"},
         {"title": "Uptown Funk", "artist": "Mark Ronson"},
-        {"title": "Kesariya", "artist": "Arijit Singh"},
-        {"title": "Butta Bomma", "artist": "Armaan Malik"},
-        {"title": "On Top of the World", "artist": "Imagine Dragons"},
-        {"title": "Love You Zindagi", "artist": "Amit Trivedi"},
     ],
     "sad": [
         {"title": "Someone Like You", "artist": "Adele"},
-        {"title": "Let Her Go", "artist": "Passenger"},
         {"title": "Fix You", "artist": "Coldplay"},
-        {"title": "Adiga Adiga", "artist": "Sid Sriram"},
-        {"title": "Agar Tum Saath Ho", "artist": "Alka Yagnik"},
-        {"title": "Channa Mereya", "artist": "Arijit Singh"},
-        {"title": "Tears in Heaven", "artist": "Eric Clapton"},
     ],
     "relaxed": [
         {"title": "Weightless", "artist": "Marconi Union"},
-        {"title": "Perfect", "artist": "Ed Sheeran"},
-        {"title": "Bloom", "artist": "The Paper Kites"},
-        {"title": "Raataan Lambiyan", "artist": "Jubin Nautiyal"},
-        {"title": "Inkem Inkem", "artist": "Sid Sriram"},
-        {"title": "Night Owl", "artist": "Galimatias"},
         {"title": "Ocean Eyes", "artist": "Billie Eilish"},
     ],
     "energetic": [
         {"title": "Believer", "artist": "Imagine Dragons"},
-        {"title": "Thunder", "artist": "Imagine Dragons"},
         {"title": "Naatu Naatu", "artist": "Rahul Sipligunj"},
-        {"title": "Malhari", "artist": "Vishal Dadlani"},
-        {"title": "Eye of the Tiger", "artist": "Survivor"},
-        {"title": "Till I Collapse", "artist": "Eminem"},
-        {"title": "Jai Ho", "artist": "A.R. Rahman"},
     ],
 }
 
 
 def get_song_recommendations(mood: str, provider: str = "none") -> list[dict[str, Any]]:
-    """
-    Returns songs based on mood.
-    'provider' is intentionally unused (future extension),
-    so we keep it but ignore it safely for CI.
-    """
-    _ = provider  # fixes pylint W0613
+    _ = provider
+
+    if not mood:
+        return SONGS["relaxed"].copy()
 
     mood = mood.lower().strip()
 
-    songs = SONGS.get(mood, []).copy()
+    songs = SONGS.get(mood)
 
+    # 🔥 important branch coverage
     if not songs:
         return SONGS["relaxed"].copy()
+
+    songs = songs.copy()
 
     random.shuffle(songs)
 

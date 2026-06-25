@@ -1,44 +1,28 @@
-import random
 from typing import Any
 
-from memory import Memory
-from tools import get_song_recommendations, mood_analyzer
+from .memory import Memory
+from .tools import get_song_recommendations, mood_analyzer
 
 
 class MusicAgent:
     def __init__(self) -> None:
         self.memory = Memory()
 
-    def run(self, user_text: str, provider: str = "none") -> dict[str, Any]:
-        mood = mood_analyzer(user_text)
+    def get_recommendations(self, mood: str) -> list[dict[str, Any]]:
+        """
+        Returns song recommendations for a given mood.
+        Returns empty list if mood is not supported.
+        """
 
-        songs = get_song_recommendations(mood, provider)
-        songs = songs.copy()
+        # optional: validate mood using analyzer (if your tool supports it)
+        analyzed_mood = mood_analyzer(mood)
 
-        random.shuffle(songs)
+        songs = get_song_recommendations(analyzed_mood)
 
-        filtered_songs = self.memory.filter_new_songs(songs)
+        if not songs:
+            return []
 
-        if not filtered_songs:
-            self.memory.clear()
-            filtered_songs = songs
+        # optionally store in memory
+        self.memory.save(mood=analyzed_mood, songs=songs)
 
-        filtered_songs = filtered_songs[:5]
-
-        self.memory.save(mood, filtered_songs)
-
-        return {
-            "mood_detected": mood,
-            "provider": provider,
-            "songs": [
-                {
-                    "title": s["title"],
-                    "artist": s["artist"],
-                    "reason": (
-                        f"This song matches your {mood} mood "
-                        "and helps improve emotional balance."
-                    ),
-                }
-                for s in filtered_songs
-            ],
-        }
+        return songs
