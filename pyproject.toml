@@ -2,7 +2,7 @@
 name = "mood-based-music-recommender"
 version = "1.0.0"
 description = "A Flask backend and HTML/CSS/JS frontend for mood-based music recommendations."
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 
 [project.optional-dependencies]
 dev = [
@@ -12,11 +12,12 @@ dev = [
   "pyupgrade==3.19.1",
   "pip-audit==2.7.3",
   "pytest==8.4.0",
-  "pytest-cov==7.1.0"
+  "pytest-cov==7.1.0",
+  "ruff==0.8.4"
 ]
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py311"
 line-length = 100
 src = ["backend"]
 exclude = [
@@ -39,12 +40,11 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 
-# IMPORTANT FIX FOR CI CONSISTENCY
 [tool.ruff.lint.isort]
 known-first-party = ["backend"]
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.11"
 files = ["backend"]
 warn_return_any = true
 warn_unused_configs = true
@@ -66,7 +66,7 @@ exclude_dirs = ["venv", ".venv", "build", "dist", "node_modules"]
 skips = []
 
 [tool.pylint.main]
-py-version = "3.12"
+py-version = "3.11"
 
 [tool.flake8]
 max-line-length = 100
