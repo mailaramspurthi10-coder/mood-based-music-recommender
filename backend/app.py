@@ -26,16 +26,12 @@ def recommend() -> ResponseReturnValue:
     try:
         data = request.get_json()
 
-        # Validate request
         if not data or "mood" not in data:
             return jsonify({"error": "Mood is required"}), 400
 
         mood_text = data["mood"].strip()
         provider = data.get("provider", "none")
 
-        # -------------------------
-        # MAIN AGENT CALL
-        # -------------------------
         result = agent.run(mood_text, provider)
 
         return jsonify(result)
@@ -48,4 +44,4 @@ def recommend() -> ResponseReturnValue:
 # RUN SERVER
 # -------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(port=5000, debug=False)
