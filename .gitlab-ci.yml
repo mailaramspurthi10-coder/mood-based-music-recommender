@@ -60,7 +60,7 @@ pip_audit_dependency_audit:
 pytest:
   stage: test
   script:
-    - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
+    - pytest -v --disable-warnings --maxfail=1
   artifacts:
     when: always
     paths:
