@@ -52,17 +52,16 @@ gitleaks_secret_scanning:
 pip_audit_dependency_audit:
   stage: security
   script:
-    - pip-audit || true
+    - pip-audit --disable-pip  # avoids CI cache/env issues
+  allow_failure: true
 
 # ---------------- TEST ----------------
 pytest:
   stage: test
   script:
     - pytest --cov=backend --cov-report=xml --cov-report=term --cov-fail-under=80
-
   artifacts:
     when: always
     paths:
       - coverage.xml
-
   coverage: '/TOTAL.*\s+(\d+)%/'
