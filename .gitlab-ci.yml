@@ -14,28 +14,40 @@ before_script:
   - python -m pip install --upgrade pip
   - python -m pip install -r backend/requirements.txt -r requirements-dev.txt
 
+# ---------------- LINT ----------------
 ruff_check:
   stage: lint
   script:
+    - python -m ruff --version
     - python -m ruff check .
 
+# ---------------- TYPE CHECK ----------------
 mypy_check:
   stage: type-check
   script:
     - python -m mypy backend
 
+# ---------------- FORMAT ----------------
 ruff_format_check:
   stage: format
   script:
+    - python -m ruff --version
     - python -m ruff format --check .
 
+# ---------------- QUALITY ----------------
 quality:
   stage: quality
   script:
-    - python -m bandit -r backend --exclude builds,venv,.venv || true
-    - python -m pylint backend || true
-    - python -m flake8 backend --ignore=E203,W503 --exclude=venv,.venv,builds
-    
+    - echo "Running Bandit..."
+    - python -m bandit -r backend --exclude venv,.venv,builds
+
+    - echo "Running Pylint..."
+    - python -m pylint backend --exit-zero
+
+    - echo "Running Flake8..."
+    - python -m flake8 backend --ignore=E203,W503 --exclude=venv,.venv,builds,__pycache__
+
+# ---------------- SECURITY ----------------
 gitleaks_secret_scanning:
   stage: security
   script:
@@ -46,6 +58,7 @@ pip_audit_dependency_audit:
   script:
     - pip-audit
 
+# ---------------- TEST ----------------
 pytest:
   stage: test
   script:
